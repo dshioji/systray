@@ -229,6 +229,8 @@ NSMenuItem *find_menu_item(NSMenu *ourMenu, NSNumber *menuId) {
         systray_on_click();
     }else if(event.type == NSEventTypeRightMouseUp){
         systray_on_rclick();
+    }else if(event.type == NSEventTypeOtherMouseUp){
+        systray_on_mclick();
     }
 }
 
@@ -240,7 +242,7 @@ NSMenuItem *find_menu_item(NSMenu *ourMenu, NSNumber *menuId) {
 
 - (void) enable_on_click {
   [statusItem.button setAction:@selector(statusOnClick:)];
-  [statusItem.button sendActionOn:(NSEventMaskLeftMouseUp|NSEventMaskRightMouseUp)];
+  [statusItem.button sendActionOn:(NSEventMaskLeftMouseUp|NSEventMaskRightMouseUp|NSEventMaskOtherMouseUp)];
 }
 
 @end

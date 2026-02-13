@@ -250,6 +250,7 @@ type winTray struct {
 	onClick  func(menu IMenu)
 	onDClick func(menu IMenu)
 	onRClick func(menu IMenu)
+	onMClick func(menu IMenu)
 }
 
 // isReady checks if the tray as already been initialized. It is not goroutine safe with in regard to the initialization function, but prevents a panic when functions are called too early.
@@ -318,6 +319,10 @@ func (t *winTray) setOnRClick(fn func(menu IMenu)) {
 	t.onRClick = fn
 }
 
+func (t *winTray) setOnMClick(fn func(menu IMenu)) {
+	t.onMClick = fn
+}
+
 // WindowProc callback function that processes messages sent to a window.
 // https://msdn.microsoft.com/en-us/library/windows/desktop/ms633573(v=vs.85).aspx
 func (t *winTray) wndProc(hWnd Handle, message uint32, wParam, lParam uintptr) (lResult uintptr) {
@@ -325,6 +330,7 @@ func (t *winTray) wndProc(hWnd Handle, message uint32, wParam, lParam uintptr) (
 		WM_RBUTTONUP     = 0x0205
 		WM_LBUTTONUP     = 0x0202
 		WM_LBUTTONDBLCLK = 0x0203
+		WM_MBUTTONUP     = 0x0208
 		WM_COMMAND       = 0x0111
 		WM_ENDSESSION    = 0x0016
 		WM_CLOSE         = 0x0010
@@ -366,6 +372,10 @@ func (t *winTray) wndProc(hWnd Handle, message uint32, wParam, lParam uintptr) (
 		case WM_LBUTTONDBLCLK:
 			if t.onDClick != nil {
 				t.onDClick(t)
+			}
+		case WM_MBUTTONUP:
+			if t.onMClick != nil {
+				t.onMClick(t)
 			}
 		}
 	case t.wmTaskbarCreated: // on explorer.exe restarts
@@ -1078,6 +1088,10 @@ func setOnDClick(fn func(menu IMenu)) {
 
 func setOnRClick(fn func(menu IMenu)) {
 	wt.setOnRClick(fn)
+}
+
+func setOnMClick(fn func(menu IMenu)) {
+	wt.setOnMClick(fn)
 }
 
 // SetTemplateIcon sets the icon of a menu item as a template icon (on macOS). On Windows, it

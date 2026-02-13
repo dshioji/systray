@@ -240,6 +240,12 @@ func setOnDClick(fn func(menu IMenu)) {
 func setOnRClick(dClick func(IMenu)) {
 }
 
+func setOnMClick(fn func(menu IMenu)) {
+	usni.secondaryActivate = func(x int32, y int32) {
+		fn(nil)
+	}
+}
+
 func nativeStart() {
 	if systrayReady != nil {
 		systrayReady()

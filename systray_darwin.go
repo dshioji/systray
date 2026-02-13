@@ -79,6 +79,7 @@ var (
 	onClick         func(menu IMenu)
 	onDClick        func(menu IMenu)
 	onRClick        func(menu IMenu)
+	onMClick        func(menu IMenu)
 	dClickTime      int64
 	isEnableOnClick = false
 )
@@ -96,6 +97,11 @@ func setOnDClick(fn func(menu IMenu)) {
 func setOnRClick(fn func(menu IMenu)) {
 	enableOnClick()
 	onRClick = fn
+}
+
+func setOnMClick(fn func(menu IMenu)) {
+	enableOnClick()
+	onMClick = fn
 }
 
 // CreateMenu 创建托盘菜单, 如果托盘菜单是空, 把菜单项添加到托盘
@@ -240,5 +246,12 @@ func systray_on_rclick() {
 		onRClick(st)
 	} else {
 		C.show_menu()
+	}
+}
+
+//export systray_on_mclick
+func systray_on_mclick() {
+	if onMClick != nil {
+		onMClick(st)
 	}
 }

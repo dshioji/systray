@@ -5,6 +5,7 @@ extern void systray_on_exit();
 extern void systray_menu_item_selected(int menu_id);
 extern void systray_on_click();
 extern void systray_on_rclick();
+extern void systray_on_mclick();
 
 void registerSystray(void);
 void nativeEnd(void);

@@ -62,6 +62,9 @@ func onReady() {
 		menu.ShowMenu()
 		fmt.Println("SetOnRClick")
 	})
+	systray.SetOnMClick(func(menu systray.IMenu) {
+		fmt.Println("SetOnMClick")
+	})
 	systray.CreateMenu()
 	addQuitItem()
 	systray.SetTemplateIcon(icon.Data, icon.Data)

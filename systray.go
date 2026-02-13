@@ -110,6 +110,11 @@ func SetOnRClick(fn func(menu IMenu)) {
 	setOnRClick(fn)
 }
 
+//设置托盘鼠标中键点击事件
+func SetOnMClick(fn func(menu IMenu)) {
+	setOnMClick(fn)
+}
+
 // RunWithExternalLoop allows the systemtray module to operate with other tookits.
 // The returned start and end functions should be called by the toolkit when the application has started and will end.
 func RunWithExternalLoop(onReady, onExit func()) (start, end func()) {
